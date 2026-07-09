@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Quiz - La Guerra de los Mundos</title>
+<style>
+body{margin:0;padding:0;background:#4b3621;font-family:Georgia,serif;display:flex;justify-content:center;align-items:center;height:100vh;}
+.libro{width:750px;background:#f4ecd8;padding:40px;border-radius:10px;box-shadow:0 0 30px black;border:8px solid #7b5b39;}
+h1{text-align:center;color:#5d3c16;}
+#pregunta{font-size:25px;margin:30px 0;}
+button{display:block;width:100%;padding:15px;margin:12px 0;font-size:18px;background:#8b6a43;color:white;border:none;cursor:pointer;border-radius:5px;transition:.3s;}
+button:hover{background:#5d3c16;}
+#resultado{text-align:center;font-size:28px;}
+#puntaje{font-size:22px;text-align:center;}
+</style>
+</head>
+<body>
+<div class="libro">
+<h1>La Guerra de los Mundos</h1>
+<div id="quiz"><div id="pregunta"></div><div id="respuestas"></div></div>
+<div id="resultado"></div><div id="puntaje"></div>
+</div>
+<script>
+const preguntas=[
+{pregunta:"¿Quién escribió La Guerra de los Mundos?",respuestas:["Julio Verne","H. G. Wells","Arthur Conan Doyle","Isaac Asimov"],correcta:1},
+{pregunta:"¿En qué año fue publicada la novela?",respuestas:["1898","1905","1880","1910"],correcta:0},
+{pregunta:"¿De qué planeta provienen los invasores?",respuestas:["Venus","Marte","Júpiter","Saturno"],correcta:1},
+{pregunta:"¿Cómo se llaman las enormes máquinas usadas por los marcianos?",respuestas:["Tanques","Trípodes","Robots","Naves"],correcta:1},
+{pregunta:"¿Qué director realizó la película de 2005?",respuestas:["James Cameron","Steven Spielberg","Ridley Scott","Christopher Nolan"],correcta:1},
+{pregunta:"¿Quién protagoniza la película de 2005?",respuestas:["Tom Hanks","Tom Cruise","Brad Pitt","Matt Damon"],correcta:1},
+{pregunta:"¿Qué derrota finalmente a los marcianos?",respuestas:["El ejército","Una bomba nuclear","Microorganismos terrestres","El frío"],correcta:2},
+{pregunta:"La novela es considerada un clásico de:",respuestas:["Romance","Ciencia ficción","Terror","Drama"],correcta:1},
+{pregunta:"¿Cuál fue una famosa adaptación de 1938?",respuestas:["Serie de televisión","Programa de radio de Orson Welles","Película muda","Obra teatral"],correcta:1},
+{pregunta:"¿Cuál es el principal mensaje de la obra?",respuestas:["La importancia del dinero","La vulnerabilidad de la humanidad frente a fuerzas superiores","La conquista del espacio","La guerra medieval"],correcta:1}
+];
+let actual=0,puntos=0;
+const pregunta=document.getElementById("pregunta"),respuestas=document.getElementById("respuestas");
+function cargar(){
+pregunta.innerHTML=(actual+1)+". "+preguntas[actual].pregunta;
+respuestas.innerHTML="";
+preguntas[actual].respuestas.forEach((t,i)=>{
+let b=document.createElement("button");
+b.textContent=t;
+b.onclick=()=>responder(i);
+respuestas.appendChild(b);
+});
+}
+function responder(i){
+if(i===preguntas[actual].correcta)puntos++;
+actual++;
+if(actual<preguntas.length)cargar();
+else{
+document.getElementById("quiz").style.display="none";
+document.getElementById("resultado").innerHTML="<h2>¡Juego terminado!</h2>";
+document.getElementById("puntaje").innerHTML=`Obtuviste <b>${puntos}</b> de <b>${preguntas.length}</b><br><br><button onclick="location.reload()">Volver a jugar</button>`;
+}}
+cargar();
+</script>
+</body>
+</html>
